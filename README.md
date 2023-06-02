@@ -1,6 +1,15 @@
-# Arkama Store
+## Arkama Store
 
-Login
+Login:
 
-Username : admin@gmail.com
-Password : admin
+    Admin
+    Username : admin@gmail.com
+    Password : admin
+
+    Staff
+    Username : staff@gmail.com
+    Password : staff
+
+    User
+    Username : staff@gmail.com
+    Password : staff
