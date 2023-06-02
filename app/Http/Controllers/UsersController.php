@@ -9,12 +9,7 @@ use Illuminate\Support\Facades\DB;
 
 class UsersController extends Controller
 {
-    public function __construct()
-    {
-        // $this->middleware('auth');
-    } 
-
-    /**
+      /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -51,11 +46,11 @@ class UsersController extends Controller
     {
         // Validasi input dari request
         $request->validate([
-            'nama' => 'required',
+            'nama' => 'required|min:3',
             'email' => 'required|email|unique:users',
-            'nohp' => 'required',
-            'password' => 'required',
-            // 'foto' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048', // Validasi file avatar
+            'nohp' => 'required|max:13|numeric',
+            'password' => 'required|min:3',
+            'foto' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048', 
         ]);
     
         // Upload dan simpan file foto
@@ -73,7 +68,7 @@ class UsersController extends Controller
             'id_role'  => $request->role,
 
         ]);
-        return redirect('/users')->with('success', 'User has been created.');
+        return redirect('/users')->with('message', 'User has been created.');
     }
     
 
@@ -116,9 +111,11 @@ class UsersController extends Controller
     {
         // Validasi input dari request
         $request->validate([
-            'nama' => 'required',
-            'email' => 'required|email|unique:users,email,' . $id,
-            'password' => 'nullable',
+            'nama' => 'required|min:3',
+            'alamat' => 'required|min:3',
+            'email' => 'required|email',
+            'nohp' => 'required|max:13|numeric',
+            'foto' => 'image|mimes:jpeg,png,jpg,gif|max:2048', // Validasi file avatar
         ]);
 
         // Temukan user yang akan diupdate
@@ -149,8 +146,7 @@ class UsersController extends Controller
             'id_role'  => $request->role,
 
         ]);
-       
-        return redirect('/users')->with('success', 'User has been updated.');
+        return redirect('/users')->with('message', 'User berhasil di upadate.');
     }
 
     /**
@@ -163,7 +159,7 @@ class UsersController extends Controller
     {
         // Temukan user yang akan dihapus
         $data_users = Users::find($id);
-        unlink('assest/foto/'.$data_user->foto);
+        unlink('assets/foto/'.$data_users->foto);
         $data_users->delete();
 
         return redirect('/users')->with('success', 'User has been deleted.');

@@ -1,5 +1,14 @@
 @extends('layout.template.admin')
 @section('content')
+@if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
 <div class="card">
     <h5 class="card-header">Tambah Produk</h5>
     <div class="card-body">
@@ -7,11 +16,11 @@
             @csrf
             <div class="mb-2">
                 <label for="">Foto</label>
-                <input type="file" class="form-control" name="foto" required>
+                <input type="file" class="form-control" name="foto" >
             </div>
             <div class="mb-2">
                 <label for="">Nama</label>
-                <input type="text" class="form-control" name="nama" required>
+                <input type="text" class="form-control" name="nama" >
             </div>
             <div class="mb-2">
                 <label for="">Kategori</label>
@@ -24,15 +33,15 @@
             </div>
             <div class="mb-2">
                 <label for="">Deskripsi</label>
-                <textarea name="deskripsi" class="form-control" required></textarea>
+                <textarea name="deskripsi" class="form-control" ></textarea>
             </div>
             <div class="mb-2">
                 <label for="">Stok</label>
-                <input type="text" name="stok" required class="form-control">
+                <input type="text" name="stok"  class="form-control">
             </div>
             <div class="mb-2">
                 <label for="">Harga</label>
-                <input type="text" class="form-control" name="harga" required>
+                <input type="text" class="form-control" name="harga" >
             </div>
 
             <div class="mb-2">

@@ -1,7 +1,16 @@
 @extends('layout.template.admin')
 @section('content')
+@if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
 <div class="card">
-    <h5 class="card-header">Daftar Pengguna</h5>
+    <h5 class="card-header">Edit Produk</h5>
     <div class="card-body">
         <form method="POST" action="{{ route('produk.update', $dProduk->id) }}" enctype="multipart/form-data">
             @csrf

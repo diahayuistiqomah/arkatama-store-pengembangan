@@ -11,8 +11,6 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\ProdukKategoriController;
 
-
-
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::get('/home', function () {
@@ -20,7 +18,7 @@ Route::get('/home', function () {
 });
 
 // Route dashboard
-Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+// Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
 // Rute untuk menampilkan halaman login
 Route::get('/login', [AuthController::class, 'index'])->name('login');
@@ -33,11 +31,11 @@ Route::get('/logout', [AuthController::class, 'actLogout'])->name('logout');
 
 // Route resource
 Route::group(['middleware' => 'auth'], function() {
-    Route::resource('dashboard', DashboardController::class);
-    Route::resource('users', UsersController::class);
-    Route::resource('role', RoleController::class);
-    Route::resource('produk', ProdukController::class);
-    Route::resource('produkkategori', ProdukKategoriController::class);
+    Route::resource('dashboard', DashboardController::class)->middleware('role:Admin,Staff');
+    Route::resource('users', UsersController::class)->middleware('role:Admin,Staff,User');
+    Route::resource('role', RoleController::class)->middleware('role:Admin,Staff');
+    Route::resource('produk', ProdukController::class)->middleware('role:Admin,Staff,User');
+    Route::resource('produkkategori', ProdukKategoriController::class)->middleware('role:Admin,Staff');
 });
 // Route::resource('/users', UsersController::class);
 

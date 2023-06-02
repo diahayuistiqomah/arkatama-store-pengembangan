@@ -126,32 +126,36 @@
 
           <ul class="menu-inner py-1">
             <!-- Dashboard -->
+            @if(auth()->user()->id_role != 3)
             <li class="menu-item {{Route::is('dashboard.*', ) ? 'active' : '' }}">
               <a href="{{route('dashboard.index')}}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-home-circle"></i>
                 <div data-i18n="Analytics">Dashboard</div>
               </a>
             </li>
-			
+            @endif
             <li class="menu-item {{Route::is('produk.*', 'produkkategori.*' ) ? 'open' : '' }}">
               <a href="javascript:void(0);" class="menu-link menu-toggle ">
                 <i class="menu-icon tf-icons bx bx-dock-top"></i>
                 <div data-i18n="Account Settings">Produk</div>
               </a>
               <ul class="menu-sub ">
+                @if(auth()->user()->id_role != 3)
                 <li class="menu-item {{Route::is('produkkategori.*', ) ? 'active' : '' }}">
                   <a href="{{route('produkkategori.index')}}" class="menu-link">
                     <div data-i18n="Account">Kategori</div>
                   </a>
                 </li>
+                @endif
                 <li class="menu-item {{Route::is('produk.*', ) ? 'active' : '' }}">
                   <a href="{{route('produk.index')}}" class="menu-link">
                     <div data-i18n="Account">Daftar Produk</div>
                   </a>
                 </li>
+                
               </ul>
             </li>
-
+            @if(auth()->user()->id_role != 3)
             <li class="menu-item {{Route::is('users.*', 'role.*') ? 'active open' : '' }}">
               <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bx-dock-top"></i>
@@ -168,6 +172,7 @@
                     <div data-i18n="Account">Daftar Pengguna</div>
                   </a>
                 </li>
+                @endif
               </ul>
             </li>
           </ul>

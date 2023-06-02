@@ -1,5 +1,14 @@
 @extends('layout.template.admin')
 @section('content')
+@if ($errors->any())
+    <div class="alert alert-danger mb-1">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
 <div class="card">
     <h5 class="card-header">Tambah Slider</h5>
     <div class="card-body">
@@ -7,7 +16,7 @@
             @csrf
             <div class="mb-2">
                 <label for="">Foto</label>
-                <input type="file" name="foto" class="form-control" required>
+                <input type="file" name="foto" class="form-control" >
             </div>
             <div class="mb-2">
                 <label for="">Keterangan</label>

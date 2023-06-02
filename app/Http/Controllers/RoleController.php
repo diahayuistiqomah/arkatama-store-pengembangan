@@ -38,6 +38,10 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'nama_role' => 'required|min:3',
+        ]);
+        
         Role::create([
             'nama_role' => $request->nama_role,
         ]);
@@ -79,6 +83,9 @@ class RoleController extends Controller
      */
     public function update(Request $request,  $id)
     {
+        $request->validate([
+            'nama_role' => 'required|min:3',
+        ]);
         $role = Role::find($id);
         $role->update([
             'nama_role' => $request->nama_role

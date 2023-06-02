@@ -3,7 +3,9 @@
 <div class="card">
     <h5 class="card-header">Dashboard</h5>
     <div class="card-body">
+    @if(auth()->user()->id_role == 1)
     <a href="{{ route('dashboard.create') }}" class="btn btn-md btn-primary">Tambah</a>
+    @endif
         <div class="table-responsive">
             <table class="table">
                 <thead>
@@ -27,12 +29,14 @@
                         </td>
                         <td>{{$row->keterangan}}</td>
                         <td>
+                            @if(auth()->user()->id_role == 1)
                             <a href="{{ route('dashboard.edit', $row->id) }}" class="btn btn-sm btn-warning mr-2">Edit</a>
                             <form action="{{ route('dashboard.destroy', $row->id) }}" method="POST" style="display: inline">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-sm btn-danger">Hapus</button>
                             </form>
+                            @endif
                         </td>
                     </tr>
                     @endforeach

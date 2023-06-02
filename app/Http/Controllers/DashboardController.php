@@ -4,14 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\Slider;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }   
-    /**
+        /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -42,6 +39,11 @@ class DashboardController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'keterangan' => 'required|min:6',
+            'foto' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+
         // Upload dan simpan file foto
         $foto = $request->file('foto');
         $namaFoto = time()."_".$foto->getClientOriginalName();
@@ -89,6 +91,11 @@ class DashboardController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $request->validate([
+            'keterangan' => 'required|min:6',
+            'foto' => 'image|mimes:jpeg,png,jpg,gif|max:2048', 
+        ]);
+
         $slider = Slider::find($id);
         $foto = $request->file('foto');
         

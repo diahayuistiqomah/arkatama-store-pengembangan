@@ -12,7 +12,11 @@ class AuthController extends Controller
     public function index()
     {
         if (Auth::check()) {
-            return redirect('dashboard');
+            if(Auth::user()->id_role != 3)
+                return redirect('dashboard');
+            else{
+                return redirect('produk');
+            }
         }else{
             return view('layout.login');
         }
@@ -21,14 +25,16 @@ class AuthController extends Controller
     public function actLogin(Request $request)
     {
         $credentials = $request->only('email', 'password');
-    
+        
         if (Auth::Attempt($credentials)) {
             // Login berhasil
-            return redirect('dashboard');
+            if(Auth::user()->id_role != 3)
+                return redirect('dashboard');
+            else{
+                return redirect('produk');
+            }
         } else {
             // Login gagal
-            // Session::flash('error_message', 'Email atau Password Salah');
-            // return redirect()->route('login');
             $error_message = 'Email atau password salah';
             return view('layout.login', compact('error_message'));
         }

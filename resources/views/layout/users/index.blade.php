@@ -1,9 +1,14 @@
 @extends('layout.template.admin')
 @section('content')
+@if ($message = Session::get('message'))
+    <div class="alert alert-primary">{{  $message }}</div>
+@endif
 <div class="card">
     <h5 class="card-header">Daftar Pengguna</h5>
     <div class="card-body">
+        @if(auth()->user()->id_role == 1)
         <a href="{{ route('users.create') }}" class="btn btn-md btn-primary">Tambah</a>
+        @endif
         <div class="table-responsive">
             <table class="table">
                 <thead>
@@ -33,6 +38,7 @@
                         <td>{{ $user->nohp }}</td>
                         <td>{{ $user->nama_role }}</td>
                         <td>
+                            @if(auth()->user()->id_role == 1)
                             <a href="{{route('users.show', $user->id_users) }}" class="btn btn-sm btn-primary mr-2">Detail</a>
                             <a href="{{ route('users.edit', $user->id_users) }}" class="btn btn-sm btn-warning mr-2">Edit</a>
                             <form action="{{ route('users.destroy', $user->id_users) }}" method="POST" style="display: inline">
@@ -40,6 +46,7 @@
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-sm btn-danger">Hapus</button>
                             </form>
+                            @endif
                         </td>
                     </tr>
                     @endforeach

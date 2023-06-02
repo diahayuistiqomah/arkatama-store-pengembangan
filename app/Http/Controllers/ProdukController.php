@@ -39,7 +39,7 @@ class ProdukController extends Controller
      */
     public function create()
     {
-        $data = [
+                $data = [
             'dKategori' => ProdukKategori::all(),
         ];
         return view('layout.produk.add', $data);
@@ -53,6 +53,15 @@ class ProdukController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'nama' => 'required|min:3',
+            'kategori' => 'required',
+            'deskripsi' => 'required|min:3',
+            'stok' => 'required|numeric',
+            'harga' => 'required|numeric',
+            'foto' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048', 
+        ]);
+
          // Upload dan simpan file foto
          $foto = $request->file('foto');
          $namaFoto = time()."_".$foto->getClientOriginalName();
@@ -106,6 +115,15 @@ class ProdukController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $request->validate([
+            'nama' => 'required|min:3',
+            'kategori' => 'required',
+            'deskripsi' => 'required|min:3',
+            'stok' => 'required|numeric',
+            'harga' => 'required|numeric',
+            'foto' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+
         $produk = Produk::find($id);
         $foto = $request->file('foto');
 
