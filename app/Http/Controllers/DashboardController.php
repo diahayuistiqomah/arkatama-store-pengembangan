@@ -28,6 +28,7 @@ class DashboardController extends Controller
      */
     public function create()
     {
+        
         return view('layout.slider.add');
     }
 
@@ -40,7 +41,7 @@ class DashboardController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'keterangan' => 'required|min:6',
+            'keterangan' => 'required|min:3',
             'foto' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
@@ -49,9 +50,16 @@ class DashboardController extends Controller
         $namaFoto = time()."_".$foto->getClientOriginalName();
         $foto->move('assets/slider', $namaFoto);
 
+        $id_role = auth()->user()->id_role;
+        if($id_role == 1){
+            $status = 1;
+        }else{
+            $status = 0;
+        }
         Slider::create([
             'foto'  => $namaFoto,
             'keterangan' => $request->keterangan,
+            'status' => $status,
         ]);
 
         return redirect()->route('dashboard.index');
@@ -92,7 +100,7 @@ class DashboardController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'keterangan' => 'required|min:6',
+            'keterangan' => 'required|min:3',
             'foto' => 'image|mimes:jpeg,png,jpg,gif|max:2048', 
         ]);
 
@@ -107,8 +115,16 @@ class DashboardController extends Controller
                 'foto' => $namaFoto,
             ]);
         }
+        $id_role = auth()->user()->id_role;
+        if($id_role == 1){
+            $status = 1;
+        }else{
+            $status = 0;
+        }
+
         $slider->update([
             'keterangan' => $request->keterangan,
+            'status' => $status,
         ]);
        return redirect()->route('dashboard.index');
     }
@@ -127,5 +143,15 @@ class DashboardController extends Controller
         $slider->delete();
 
         return redirect('/dashboard')->with('success', 'User has been deleted.');
+    }
+
+    public function konfirmasi($id)
+    {
+        $slider = Slider::find($id);
+        $slider->update([
+            'status'    => 1
+        ]);
+       return redirect()->route('dashboard.index');
+
     }
 }

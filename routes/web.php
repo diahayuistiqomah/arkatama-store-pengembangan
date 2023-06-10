@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\SemuaProdukController;
 
 use App\Http\Controllers\SliderController;
 use App\Http\Controllers\UsersController;
@@ -29,12 +30,18 @@ Route::post('/actLogin', [AuthController::class, 'actLogin'])->name('login.submi
 // Logout
 Route::get('/logout', [AuthController::class, 'actLogout'])->name('logout');
 
+// semua produk
+Route::resource('semua-produk', SemuaProdukController::class);
+
 // Route resource
 Route::group(['middleware' => 'auth'], function() {
     Route::resource('dashboard', DashboardController::class)->middleware('role:Admin,Staff');
+    Route::get('dashboard/konfirmasi/{id}', [DashboardController::class, 'konfirmasi'])->name('dashboard.konfirmasi');
+
     Route::resource('users', UsersController::class)->middleware('role:Admin,Staff,User');
     Route::resource('role', RoleController::class)->middleware('role:Admin,Staff');
     Route::resource('produk', ProdukController::class)->middleware('role:Admin,Staff,User');
+    Route::get('produk/konfirmasi/{id}', [ProdukController::class, 'konfirmasi'])->name('produk.konfirmasi');
     Route::resource('produkkategori', ProdukKategoriController::class)->middleware('role:Admin,Staff');
 });
 // Route::resource('/users', UsersController::class);

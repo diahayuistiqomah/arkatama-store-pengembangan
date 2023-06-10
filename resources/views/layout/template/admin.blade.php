@@ -140,7 +140,7 @@
                 <div data-i18n="Account Settings">Produk</div>
               </a>
               <ul class="menu-sub ">
-                @if(auth()->user()->id_role != 3)
+                @if(auth()->user()->id_role == 1)
                 <li class="menu-item {{Route::is('produkkategori.*', ) ? 'active' : '' }}">
                   <a href="{{route('produkkategori.index')}}" class="menu-link">
                     <div data-i18n="Account">Kategori</div>
@@ -155,7 +155,7 @@
                 
               </ul>
             </li>
-            @if(auth()->user()->id_role != 3)
+            @if(auth()->user()->id_role == 1)
             <li class="menu-item {{Route::is('users.*', 'role.*') ? 'active open' : '' }}">
               <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bx-dock-top"></i>

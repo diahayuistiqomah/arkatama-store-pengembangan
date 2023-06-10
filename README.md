@@ -1,4 +1,4 @@
-## Arkama Store
+## JualanBaju.com
 
 Login:
 
@@ -11,5 +11,5 @@ Login:
     Password : staff
 
     User
-    Username : staff@gmail.com
-    Password : staff
+    Username : user@gmail.com
+    Password : user

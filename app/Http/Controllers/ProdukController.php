@@ -67,6 +67,13 @@ class ProdukController extends Controller
          $namaFoto = time()."_".$foto->getClientOriginalName();
          $foto->move('assets/produk', $namaFoto);
 
+        $id_role = auth()->user()->id_role;
+        if($id_role == 1){
+            $status = 1;
+        }else{
+            $status = 0;
+        }
+
         Produk::create([
             'nama'  => $request->nama,
             'foto'  => $namaFoto,
@@ -74,6 +81,7 @@ class ProdukController extends Controller
             'stok'  => $request->stok,
             'harga'  => $request->harga,
             'id_produk_kategori'  => $request->kategori,
+            'status'  => $status,
         ]);
 
         return redirect()->route('produk.index');
@@ -135,12 +143,21 @@ class ProdukController extends Controller
                 'foto' => $namaFoto,
             ]);
         }
+
+        $id_role = auth()->user()->id_role;
+        if($id_role == 1){
+            $status = 1;
+        }else{
+            $status = 0;
+        }
+
         $produk->update([
             'nama'  => $request->nama,
             'deskripsi'  => $request->deskripsi,
             'stok'  => $request->stok,
             'harga'  => $request->harga,
             'id_produk_kategori'  => $request->kategori,
+            'status'  => $status,
         ]);
        return redirect()->route('produk.index');
     }
@@ -159,5 +176,15 @@ class ProdukController extends Controller
         $produk->delete();
 
         return redirect('/produk')->with('success', 'User has been deleted.');
+    }
+
+    public function konfirmasi($id)
+    {
+        $produk = Produk::find($id);
+        $produk->update([
+            'status'    => 1
+        ]);
+       return redirect()->route('produk.index');
+
     }
 }
