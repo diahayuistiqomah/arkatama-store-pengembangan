@@ -20,19 +20,18 @@ class SemuaProdukController extends Controller
 
         $nama           = $request->input('nama');
         $kategori       = $request->input('kategori');
-        $harga_terendah = $request->input('harga_terandah');
+        $harga_terendah = $request->input('harga_terendah');
         $harga_tertinggi = $request->input('harga_tertinggi');
 
-        if($nama !== ''){
-            // if($kategori)
-            $cariProduk = $this->cariNama($nama);
-        }elseif($nama !== '' AND $kategori !== ''){
-            $cariProduk = $this->cariNama($nama,$kategori);
 
+        if($nama != null AND $kategori != null AND $harga_terendah != null AND $harga_tertinggi != null){
+            $cariProduk = $this->cari($nama,$kategori,$harga_terendah,$harga_tertinggi)->get();
+        }elseif($nama != null AND $kategori == null AND $harga_terendah != null AND $harga_tertinggi != null){
+            $cariProduk = $this->cariSemua($nama,$harga_terendah,$harga_tertinggi)->get();
         }else{
             $cariProduk = $dataProduk;
-
         }
+
         $data = [
             'dKategori' => $dataKategori,
             'dProduk' => $cariProduk,
@@ -55,29 +54,27 @@ class SemuaProdukController extends Controller
         
     }
 
-    public function cariNama($nama)
+    public function cari($nama,$kategori,$harga_terendah,$harga_tertinggi)
     {
         $dataProduk = DB::table('produk')
                     ->select('produk.id as id_produk', 'produk.*', 'produk_kategori.id as id_kategori', 'produk_kategori.*')
                     ->join('produk_kategori', 'produk_kategori.id', '=', 'produk.id_produk_kategori')
                     ->where('status', 1)
-                    ->where('produk.nama', 'like','%'.$nama.'%')
-                    ->get();
+                    ->Where('produk.nama', 'like','%'.$nama.'%')
+                    ->where('produk_kategori.id',$kategori)
+                    ->WhereBetween('produk.harga', [$harga_terendah, $harga_tertinggi]);
         return $dataProduk;
     }
 
-    public function cariNamaKategori($nama,$kategori)
+    public function cariSemua($nama,$harga_terendah,$harga_tertinggi)
     {
         $dataProduk = DB::table('produk')
                     ->select('produk.id as id_produk', 'produk.*', 'produk_kategori.id as id_kategori', 'produk_kategori.*')
                     ->join('produk_kategori', 'produk_kategori.id', '=', 'produk.id_produk_kategori')
                     ->where('status', 1)
-                    ->where('produk.nama', 'like','%'.$nama.'%')
-                    ->where('produk_kategori.id', $kategori)
-                    ->get();
+                    ->Where('produk.nama', 'like','%'.$nama.'%')
+                    ->WhereBetween('produk.harga', [$harga_terendah, $harga_tertinggi]);
         return $dataProduk;
     }
-
-
 
 }

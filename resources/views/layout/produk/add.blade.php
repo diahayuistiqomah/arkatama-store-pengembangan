@@ -24,8 +24,8 @@
             </div>
             <div class="mb-2">
                 <label for="">Kategori</label>
-                <select name="kategori" class="form-select">
-                    <option>Pilih</option>
+                <select name="kategori" class="form-select" required>
+                    <option value="">Pilih</option>
                     @foreach ($dKategori as $row)
                     <option value="{{$row->id}}">{{$row->nama_kategori}}</option>
                     @endforeach

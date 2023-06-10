@@ -23,21 +23,41 @@
           </div>
           <div class="mb-3">
               <label class="form-label" for="kategori">Jenis produk</label>
-              <select name="kategori" id="kategori" class="form-select">
-                  <option selected>Pilih</option>
+              @php 
+              if(isset($_GET['kategori']) ){
+                $seleckategori = $_GET['kategori'];
+              }else{
+                $seleckategori = '';
+              }
+              @endphp
+              <select name="kategori" id="kategori" class="form-select" >
+                  <option value="">Semua</option>
                   @foreach($dKategori as $kategori)
-                  <option value="{{$kategori->nama_kategori}}">{{$kategori->nama_kategori}}</option>
+                  <option <?php if($kategori->id == $seleckategori) echo 'selected'?> value="{{$kategori->id}}">{{$kategori->nama_kategori}}</option>
                   @endforeach
                 </select>
           </div>
           <div class="row mb-3">
+            @php 
+              if(isset($_GET['harga_terendah']) ){
+                $min = $_GET['harga_terendah'];
+              }else{
+                $min = '';
+              }
+
+              if(isset($_GET['harga_tertinggi']) ){
+                $max = $_GET['harga_tertinggi'];
+              }else{
+                $max = '';
+              }
+            @endphp
             <div class="col-md-6">
               <label for="range-awal" class="form-label">Harga Terendah</label>
-              <input type="text" class="form-control" name="harga-terendah">
+              <input type="text" class="form-control" name="harga_terendah" value="{{$min}}" required>
             </div>
             <div class="col-md-6">
               <label for="range-awal" class="form-label">Harga Tertinggi</label>
-              <input type="text" class="form-control" name="harga-tertinggi">
+              <input type="text" class="form-control" name="harga_tertinggi" value="{{$max}}" required>
             </div>
           </div>
           <div class="mb-3">
@@ -50,7 +70,7 @@
       <div class="col-lg-8">
         <div class="row">
           @foreach($dProduk as $row)
-          <div class="col-sm-6 col-md-4 mb-3 mb-md-0 h-100">
+          <div class="col-sm-4 col-md-4 mb-3 mb-md-0 h-100">
             <div class="card card-span h-100 text-white"><img class="img-fluid h-100" src="{{asset('assets/produk/'.$row->foto)}}" alt="...">
               <div class="card-img-overlay ps-0"> </div>
               <div class="card-body ps-0 bg-200">
