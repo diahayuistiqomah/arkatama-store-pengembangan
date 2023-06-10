@@ -18,4 +18,6 @@ class Produk extends Model
         'status',
         'id_produk_kategori',
     ];
+
+    
 }

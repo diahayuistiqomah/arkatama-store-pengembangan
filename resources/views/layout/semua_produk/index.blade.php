@@ -9,17 +9,24 @@
       <!-- filter -->
       <div class="col-lg-4">
         <form method="get"  action="">
-          {{csrf_field()}}
+          <!-- {{csrf_field()}} -->
           <div class="mb-3">
               <label class="form-label" for="nama">Nama produk</label>
-              <input class="form-control" name="nama" id="nama" type="text">
+              @php 
+              if(isset($_GET['nama']) ){
+                $nama = $_GET['nama'];
+              }else{
+                $nama = '';
+              }
+              @endphp
+              <input class="form-control" name="nama" id="nama" type="text" value="{{$nama}}">
           </div>
           <div class="mb-3">
               <label class="form-label" for="kategori">Jenis produk</label>
-              <select id="kategori" class="form-select">
+              <select name="kategori" id="kategori" class="form-select">
                   <option selected>Pilih</option>
                   @foreach($dKategori as $kategori)
-                  <option value="{{$kategori->id}}">{{$kategori->nama_kategori}}</option>
+                  <option value="{{$kategori->nama_kategori}}">{{$kategori->nama_kategori}}</option>
                   @endforeach
                 </select>
           </div>
@@ -49,7 +56,7 @@
               <div class="card-body ps-0 bg-200">
                 <h5 class="fw-bold text-1000 text-truncate">{{$row->nama}}</h5>
                 <div class="fw-bold"><span class="text-primary">Rp. {{number_format($row->harga)}}</span></div>
-              </div><a class="stretched-link" href="#"></a>
+              </div><a class="stretched-link" href="semua-produk/{{$row->id_produk}}"></a>
             </div>
           </div>
           @endforeach
