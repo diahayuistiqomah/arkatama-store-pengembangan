@@ -2814,8 +2814,8 @@ textarea.form-control-lg {
 
 .form-select {
   display: block;
-  /* width: 100%; */
-  padding: 0.5rem 7.5rem 0.5rem 2.5rem;
+  width: 100%;
+  padding: 0.5rem 7.5rem 0.5rem 1rem;
   font-size: 1rem;
   font-weight: 400;
   line-height: 1.5;
