@@ -19,7 +19,7 @@
                 $nama = '';
               }
               @endphp
-              <input class="form-control" name="nama" id="nama" type="text" value="{{$nama}}">
+              <input class="form-control" name="nama" id="nama" type="text" value="{{$nama}}" required>
           </div>
           <div class="mb-3">
               <label class="form-label" for="kategori">Jenis produk</label>
